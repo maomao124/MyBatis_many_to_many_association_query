@@ -1,5 +1,8 @@
 package mapper;
 
+import data.Course;
+import org.apache.ibatis.annotations.Param;
+
 /**
  * Project name(项目名称)：MyBatis多对多关联查询
  * Package(包名): mapper
@@ -15,5 +18,12 @@ package mapper;
 
 public interface CourseMapper
 {
-
+    /**
+     * Gets course.
+     * 多对多查询，单步
+     *
+     * @param course_no the course no
+     * @return the course
+     */
+    public Course getCourse(@Param("course_no") Long course_no);
 }
