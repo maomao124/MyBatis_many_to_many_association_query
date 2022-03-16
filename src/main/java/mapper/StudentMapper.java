@@ -55,4 +55,13 @@ public interface StudentMapper
      * @return the student information by class no
      */
     public List<data.Student> getStudentInformationByClassNo(@Param("class_no") Long class_no);
+
+    /**
+     * Gets student information 3.
+     * 多对多查询
+     *
+     * @param student_no the student no
+     * @return the student information 3
+     */
+    public data.Student getStudentInformation3(@Param("student_no") Long student_no);
 }

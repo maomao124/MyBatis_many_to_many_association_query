@@ -74,4 +74,37 @@
         from student
         where class_no = #{class_no}
     </select>
+
+
+    <resultMap id="getStudentInformation3" type="student">
+        <id property="student_no" column="student_no"/>
+        <result property="name" column="name"/>
+        <result property="sex" column="sex"/>
+        <result property="telephone_number" column="telephone_number"/>
+        <result property="family_telephone_number" column="family_telephone_number"/>
+        <result property="birthday" column="birthday"/>
+        <result property="address" column="address"/>
+        <result property="id_card" column="id_card"/>
+        <result property="email" column="email"/>
+        <result property="dormitory_number" column="dormitory_number"/>
+        <result property="state" column="state"/>
+        <result property="remarks" column="remarks"/>
+        <collection property="courseList" ofType="course">
+            <id property="course_no" column="course_no"/>
+            <result property="course_name" column="course_name"/>
+            <result property="course_credit" column="course_credit"/>
+            <result property="course_hour" column="course_hour"/>
+            <result property="course_mode" column="course_mode"/>
+        </collection>
+    </resultMap>
+
+    <select id="getStudentInformation3" resultMap="getStudentInformation3">
+        select *
+        from student,
+             score,
+             course
+        where course.course_no = score.course_no
+          and score.no = student.student_no
+          and student.student_no = #{student_no}
+    </select>
 </mapper>
