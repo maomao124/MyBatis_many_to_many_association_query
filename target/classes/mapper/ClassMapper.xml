@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.ClassMapper">
+
+    <select id="getClass" resultType="data.Class">
+        select *
+        from class
+        where class_no = #{class_no}
+    </select>
+
+
+    <resultMap id="getClass1" type="class">
+        <id property="class_no" column="class_no"/>
+        <result property="class_name" column="class_name"/>
+        <result property="class_major" column="class_major"/>
+        <result property="class_enrollment_year" column="class_enrollment_year"/>
+        <result property="class_college" column="class_college"/>
+        <collection property="studentList" column="class_no" ofType="student"
+                    select="mapper.StudentMapper.getStudentInformationByClassNo">
+        </collection>
+    </resultMap>
+
+    <select id="getClass1" resultMap="getClass1">
+        select *
+        from class
+        where class_no = #{class_no}
+    </select>
+
+
+    <resultMap id="getClass2" type="class">
+        <id property="class_no" column="class_no"/>
+        <result property="class_name" column="class_name"/>
+        <result property="class_major" column="class_major"/>
+        <result property="class_enrollment_year" column="class_enrollment_year"/>
+        <result property="class_college" column="class_college"/>
+        <collection property="studentList" ofType="student">
+            <id property="student_no" column="student_no"/>
+            <result property="name" column="name"/>
+            <result property="sex" column="sex"/>
+            <result property="telephone_number" column="telephone_number"/>
+            <result property="family_telephone_number" column="family_telephone_number"/>
+            <result property="birthday" column="birthday"/>
+            <result property="address" column="address"/>
+            <result property="id_card" column="id_card"/>
+            <result property="email" column="email"/>
+            <result property="dormitory_number" column="dormitory_number"/>
+            <result property="state" column="state"/>
+            <result property="remarks" column="remarks"/>
+        </collection>
+    </resultMap>
+
+    <select id="getClass2" resultMap="getClass2">
+        select *
+        from student,
+             class
+        where class.class_no = student.class_no
+          and class.class_no = #{class_no}
+    </select>
+</mapper>
