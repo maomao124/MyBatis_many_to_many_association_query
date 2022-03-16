@@ -1,6 +1,14 @@
 package mapper;
 
+import data.Course;
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -21,8 +29,20 @@ class CourseMapperTest
 {
 
     @Test
-    void getCourse()
+    void getCourse() throws IOException
     {
+        //读取配置文件mybatis-config.xml
+        InputStream config = Resources.getResourceAsStream("mybatis-config.xml");
+        //根据配置文件构建SqlSessionFactory
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(config);
+        //通过SqlSessionFactory创建SqlSession
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        CourseMapper courseMapper = sqlSession.getMapper(CourseMapper.class);
 
+        Course course = courseMapper.getCourse(200002L);
+        System.out.println("该课程选修人数：" + course.getStudentList().size());
+        System.out.println(course);
+
+        sqlSession.close();
     }
 }
